@@ -1,4 +1,4 @@
-package main
+package wallet_server
 
 import (
 	"bytes"

@@ -2,8 +2,8 @@ package main
 
 import (
 	"flag"
+	"goblockchain/blockchain_server/blockchain_server"
 	"log"
-	"sync"
 )
 
 func init() {
@@ -11,15 +11,8 @@ func init() {
 }
 
 func main() {
-	var wg sync.WaitGroup
-	wg.Add(1)
 	port := flag.Uint("port", 5000, "TCP Port Number for Blockchain Server")
 	flag.Parse()
-	app := NewBlockchainServer(uint16(*port))
-	go func() {
-		defer wg.Done()
-		app.Run()
-	}()
-
-	wg.Wait()
+	app := blockchain_server.NewBlockchainServer(uint16(*port))
+	app.Run()
 }

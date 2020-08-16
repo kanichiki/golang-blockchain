@@ -1,0 +1,33 @@
+version: '3' # composeファイルのバーション指定
+services:
+#  docker-compose run -p 8080:8080 -e PORT=8080 -e GATEWAY=http://node1:5000 wallet
+  wallet: # service名
+    build:
+      context: ./wallet_server # ビルドに使用するDockerfileがあるディレクトリ指定
+    tty: true # コンテナの起動永続化
+    environment:
+      - PORT
+      - GATEWAY
+    volumes:
+      - ./:/go/src/goblockchain # マウントディレクトリ指定
+    networks:
+      - blockchain
+    command: go run ./wallet_server/main.go
+
+#  docker-compose run -p 5000:5000 -e PORT=5000 --name node1 node
+  node:
+    container_name: blockchain-node
+    build:
+      context: ./blockchain_server
+    tty: true
+    environment:
+      - PORT
+    volumes:
+      - ./:/go/src/goblockchain
+    networks:
+      - blockchain
+    command: go run ./blockchain_server/main.go
+
+networks:
+  blockchain:
+    driver: bridge

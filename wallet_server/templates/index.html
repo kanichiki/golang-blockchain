@@ -43,11 +43,11 @@
                     data:JSON.stringify(transaction_data),
                     success:function (response){
                         console.info(response);
-                        if (response.message === 'fail'){
-                            alert("failed")
-                            return
+                        if (response.message == 'fail'){
+                            alert('Send fail')
+                        }else{
+                            alert('Send success')
                         }
-                        alert('Send success');
                     },
                     error:function (response){
                         console.error(response);
@@ -65,6 +65,7 @@
                     success:function (response){
                         let amount = response['amount'];
                         $('#wallet_amount').text(amount)
+
                         console.info(amount)
                     },
                     error:function (error){
@@ -86,7 +87,9 @@
 <div>
     <h1>Wallet</h1>
     <div id="wallet_amount">0</div>
+    <!--
     <button id="reload_wallet">Reload Wallet</button>
+    -->
 
     <p>Public Key</p>
     <textarea id="public_key" rows="2" cols="100"></textarea>
